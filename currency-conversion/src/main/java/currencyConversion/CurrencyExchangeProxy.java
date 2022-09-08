@@ -13,5 +13,5 @@ public interface CurrencyExchangeProxy {
 
 	
 	@GetMapping("/currency-exchange/from/{from}/to/{to}")
-	CurrencyConversion getExchange(@PathVariable String from, @PathVariable String to);
+	CurrencyExchangeDto getExchange(@PathVariable String from, @PathVariable String to);
 }

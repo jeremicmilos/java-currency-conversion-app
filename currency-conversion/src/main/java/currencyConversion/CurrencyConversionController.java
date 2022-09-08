@@ -14,9 +14,11 @@ import org.springframework.web.client.RestTemplate;
 public class CurrencyConversionController {
 
 	@Autowired
-	private CurrencyExchangeProxy proxy;
+	private CurrencyExchangeProxy currencyExchangeProxy;
+	@Autowired
+	private BankAccountProxy bankAccountProxy;
 	
-	@GetMapping("/currency-conversion/from/{from}/to/{to}/quantity/{quantity}")
+	/*@GetMapping("/currency-conversion/from/{from}/to/{to}/quantity/{quantity}")
 	public CurrencyConversion getConversion(@PathVariable String from, @PathVariable String to, @PathVariable BigDecimal quantity) {
 		
 		HashMap<String,String> uriVariables = new HashMap<>();
@@ -29,15 +31,17 @@ public class CurrencyConversionController {
 		CurrencyConversion temp = response.getBody();
 		
 		return new CurrencyConversion(temp.getId(),from,to,temp.getConversionMultiple(),quantity,quantity.multiply(temp.getConversionMultiple()), temp.getEnvironment());
-	}
+	}*/
 	
-	@GetMapping("/currency-conversion-feign/from/{from}/to/{to}/quantity/{quantity}")
-	public CurrencyConversion getConversionFeign(@PathVariable String from, @PathVariable String to, @PathVariable BigDecimal quantity) {
+	@GetMapping("/currency-conversion/from/{from}/to/{to}/quantity/{quantity}/user/{user}")
+	public BankAccountDto getConversion(@PathVariable String from, @PathVariable String to, @PathVariable BigDecimal quantity, @PathVariable String user) {
 		
-		CurrencyConversion temp = proxy.getExchange(from, to);
-		
-		return new CurrencyConversion(temp.getId(),from,to,temp.getConversionMultiple(),quantity,
-				quantity.multiply(temp.getConversionMultiple()), temp.getEnvironment() + "feign");
+		CurrencyExchangeDto currencyConversion = currencyExchangeProxy.getExchange(from, to);
+
+		bankAccountProxy.getBankAccountByEmail(user);
+
+		return bankAccountProxy.updateBankAccount(from, to, quantity, user,
+				quantity.multiply(currencyConversion.getConversionMultiple()));
 	}
 	
 }

@@ -10,10 +10,10 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>microservices</groupId>
-	<artifactId>currency-exhange</artifactId>
+	<artifactId>currency-exchange</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>currency-exhange</name>
-	<description>First microservice</description>
+	<name>currency-exchange</name>
+	<description>First microservice 1</description>
 	<properties>
 		<java.version>1.8</java.version>
 		<spring-cloud.version>2021.0.1</spring-cloud.version>
@@ -95,7 +95,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
 					<image>
-						<name>sephyron/${project.artifactId}:${project.version}</name>
+						<name>milosjeremic/${project.artifactId}:${project.version}</name>
 					</image>
 					<pullPolicy>IF_NOT_PRESENT</pullPolicy>
 				</configuration>

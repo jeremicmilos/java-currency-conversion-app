@@ -18,6 +18,12 @@ public class ApiGatewayConfiguration {
 		return builder.routes().route(p -> p.path("/get").uri("http://httpbin.org:80")).
 				route(p -> p.path("/currency-conversion/**").uri("lb://currency-conversion"))
 				.route(p -> p.path("/currency-conversion-feign/**").uri("lb://currency-conversion"))
-				.route(p -> p.path("/currency-exchange/**").uri("lb://currency-exchange")).build();
+				.route(p -> p.path("/currency-exchange/**").uri("lb://currency-exchange"))
+				.route(p -> p.path("/bank-account/**").uri("lb://bank-account"))
+				.route(p -> p.path("/crypto-wallet/**").uri("lb://crypto-wallet"))
+				.route(p -> p.path("/crypto-exchange/**").uri("lb://crypto-exchange"))
+				.route(p -> p.path("/crypto-conversion/**").uri("lb://crypto-conversion"))
+				.route(p -> p.path("/crypto-trade/**").uri("lb://crypto-trade"))
+				.build();
 	}
 }

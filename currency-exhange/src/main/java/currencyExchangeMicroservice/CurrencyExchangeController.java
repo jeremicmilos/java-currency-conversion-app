@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import currencyExchangeMicroservice.errorHandling.BadRequestException;
+
 @RestController
 public class CurrencyExchangeController {
 
@@ -21,6 +23,10 @@ public class CurrencyExchangeController {
 	public CurrencyExchange getExchange(@PathVariable String from, @PathVariable String to) {
 		String port = environment.getProperty("local.server.port");
 		CurrencyExchange temp = repo.findByFromAndTo(from, to);
+		if(temp == null) 
+		{
+			throw new BadRequestException("Incorrect currency value parameter");
+		}
 		return new CurrencyExchange(temp.getId(),from,to,temp.getConversionMultiple(),port);
 	}
 }
